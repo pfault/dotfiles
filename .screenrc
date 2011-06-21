@@ -1,0 +1,16 @@
+startup_message off
+autodetach on
+shell "/bin/zsh"
+term screen-256color
+vbell off
+defscrollback 10000
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+backtick 1 3600 900 "/home/pfault/arch-updates/updates.pl"
+
+hardstatus alwayslastline "%{= kw}%{g}[ %{G}%H %{g}] %{Y}pkgs: %{w}%1` %{g}[%=%{ =kw}%{w}%-w%{Y}[%{W}%n-%t%{Y}]%{w}%+w%=%{g}][ %{w}%l %{g}][ %{w}%d-%m %{Y}%c %{g}]"
+
+screen -t htop htop
+screen -t mcabber mcabber
+screen -t mutt mutt
+

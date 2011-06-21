@@ -1,0 +1,15 @@
+###
+# pfaultf4n specific options
+###
+
+color status cyan default
+
+  set from      = "@f4n.de"
+  set sendmail  = "/usr/bin/msmtp -a pfaultf4n"
+  set mbox      = "+pfault-f4n.de/archive"
+  set record    = "+pfault-f4n.de/Sent"
+  set postponed = "+pfault-f4n.de/Drafts"
+
+macro index A "<save-message>+pfault-f4n.de/archive<enter>" "archive message"
+macro index D "<save-message>+pfault-f4n.de/Trash<enter>"   "move message to the trash"
+macro index S "<save-message>+pfault-f4n.de/Junk<enter>" 	  "mark message as spam"
