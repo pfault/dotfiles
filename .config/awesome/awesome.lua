@@ -69,6 +69,8 @@ config_dir = awful.util.getdir("config")
 -- Themes define colours, icons, and wallpapers
 beautiful.init( config_dir .. "/current_theme/theme.lua")
 
+local scratch = require("scratch")
+
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
@@ -581,6 +583,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "u", function () awful.util.spawn("xscreensaver-command -lock") end),
     awful.key({}, "XF86Display", xrandr),
     awful.key({ modkey, "Control" }, "p", xrandr),
+    awful.key({ modkey,           }, "`", function () scratch.drop(terminal, "top", "center", 1, 0.3) end),
+
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
@@ -593,6 +597,7 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end)
 )
+
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
