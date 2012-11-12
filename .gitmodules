@@ -1,0 +1,3 @@
+[submodule ".config/awesome/awesompd"]
+	path = .config/awesome/awesompd
+	url = https://github.com/alexander-yakushev/awesompd.git
