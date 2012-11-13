@@ -11,7 +11,9 @@ require("vicious")
 
 -- Custom libraries
 require("runonce")
+require("calendar2")
 require("awesompd/awesompd")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -68,6 +70,7 @@ home   = os.getenv("HOME")
 config_dir = awful.util.getdir("config")
 -- Themes define colours, icons, and wallpapers
 beautiful.init( config_dir .. "/current_theme/theme.lua")
+naughty.config.presets.normal.bg = beautiful.bg_focus
 
 local scratch = require("scratch")
 
@@ -279,6 +282,8 @@ musicwidget = awesompd:create() -- Create awesompd widget
                                  { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
                                  { modkey, "Pause", musicwidget:command_playpause() } })
   musicwidget:run() -- After all configuration is done, run the widget
+
+calendar2.addCalendarToWidget(mytextclock, "<span color='green'>%s</span>")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
