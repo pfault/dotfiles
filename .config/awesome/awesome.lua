@@ -683,15 +683,21 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = "URxvt" },
+      properties = { floating = false } },
+    { rule = { name = "irssi" },
+      properties = { tag = tags[1][9] } },
     { rule = { class = "MPlayer" },
-      properties = { floating = true } },
+      properties = { floating = true, tag = tags[1][5], switchtotag = tags[1][5], focus = true } },
+    { rule = { class = "libreoffice-" },
+      properties = { floating = false, tag = tags[1][7], switchtotag = tags[1][7], focus = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    { rule = { class = "Gimp" },
+      properties = { floating = true, tag = tags[1][6] } },
     -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+    { rule_any = { class = { "Firefox", "luakit" } },
+      properties = { tag = tags[1][3] } },
 }
 -- }}}
 
