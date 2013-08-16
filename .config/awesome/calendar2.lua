@@ -31,7 +31,7 @@ function displayMonth(month,year,weekStart)
                 lines = lines .. os.date("%a ",os.time{year=2006,month=1,day=x+wkSt})
         end
 
-        lines = lines .. "\n" .. os.date(" %V",os.time{year=year,month=month,day=1})
+        lines = lines .. "\n" .. os.date(" %V",os.time{year=year,month=month,day=1})
 
         local writeLine = 1
         while writeLine < (stDay + 1) do
@@ -44,7 +44,7 @@ function displayMonth(month,year,weekStart)
                 local t = os.time{year=year,month=month,day=d}
                 if writeLine == 8 then
                         writeLine = 1
-                        lines = lines .. "\n" .. os.date(" %V",t)
+                        lines = lines .. "\n" .. os.date(" %V",t)
                 end
                 if os.date("%Y-%m-%d") == os.date("%Y-%m-%d", t) then
                         x = string.format(current_day_format, d)
@@ -55,7 +55,7 @@ function displayMonth(month,year,weekStart)
                 lines = lines .. "  " .. x
                 writeLine = writeLine + 1
         end
-        local header = os.date("%B %Y\n",os.time{year=year,month=month,day=1})
+        local header = os.date("%B %Y\n",os.time{year=year,month=month,day=1})
 
         return header .. "\n" .. lines
 end
@@ -64,21 +64,19 @@ function switchNaughtyMonth(switchMonths)
         if (#calendar < 3) then return end
         local swMonths = switchMonths or 1
         calendar[1] = calendar[1] + swMonths
-        calendar[3].box.widgets[2].text = string.format('<span font_desc="%s">%s</span>', "monospace", displayMonth(calendar[1], calendar[2], 2))
-end
-
-function switchNaughtyGoToToday()
-        if (#calendar < 3) then return end
-        local swMonths = switchMonths or 1
-        calendar[1] = os.date("*t").month
-        calendar[2] = os.date("*t").year
-       switchNaughtyMonth(0)
+        naughty.notify({
+                text = string.format('<span font_desc="%s">%s</span>', "monospace", displayMonth(calendar[1], calendar[2], 2)),
+                timeout = 0,
+                hover_timeout = 0.5,
+                screen = capi.mouse.screen,
+                replaces_id = calendar[3].id
+        })
 end
 
 function addCalendarToWidget(mywidget, custom_current_day_format)
   if custom_current_day_format then current_day_format = custom_current_day_format end
 
-  mywidget:add_signal('mouse::enter', function ()
+  mywidget:connect_signal('mouse::enter', function ()
         local month, year = os.date('%m'), os.date('%Y')
         calendar = { month, year,
         naughty.notify({
@@ -89,13 +87,12 @@ function addCalendarToWidget(mywidget, custom_current_day_format)
         })
   }
   end)
-  mywidget:add_signal('mouse::leave', function () naughty.destroy(calendar[3]) end)
+  mywidget:connect_signal('mouse::leave', function () naughty.destroy(calendar[3]) end)
 
   mywidget:buttons(awful.util.table.join(
     awful.button({ }, 1, function()
         switchNaughtyMonth(-1)
     end),
-    awful.button({ }, 2, switchNaughtyGoToToday),
     awful.button({ }, 3, function()
         switchNaughtyMonth(1)
     end),

@@ -15,7 +15,8 @@ URxvt*tintColor: black
 URxvt*shading: 20
 ## geometry and font
 URxvt*geometry: 84×24
-!URxvt*font: xft:terminus:pixelsize=12
+#!URxvt*font: xft:terminus:pixelsize=12
+URxvt.font: xft:terminus:autohint=true:antialias=true:pixelsize=12
 ## change default colors
 URxvt*background: #000000
 URxvt*foreground: #00AA00
@@ -36,6 +37,21 @@ URxvt*color13: #F854F8
 URxvt*color14: #50FCF8
 URxvt*color15: #F8FCF8
 urxvt*perl-lib:         /usr/lib/urxvt/perl/
-urxvt*perl-ext-common:  default,matcher
-urxvt*matcher.button:   1
-urxvt*urlLauncher:      /usr/bin/luakit
+!-*- Perl extensions -*-
+URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select
+URxvt.keysym.M-u:     perl:url-select:select_next
+URxvt.url-launcher:   /usr/bin/chromium
+URxvt.underlineURLs:  True
+URxvt.matcher.button: 1 
+URxvt.keysym.M-Escape:perl:keyboard-select:activate
+URxvt.keysym.M-c:     perl:clipboard:copy
+URxvt.keysym.M-v:     perl:clipboard:paste
+URxvt.keysym.M-C-v:   perl:clipboard:paste_escaped
+!URxvt.copyCommand:   xsel -ib
+!URxvt.pasteCommand:  xsel -ob
+!
+! rxvt-unicode
+URxvt.urgentOnBell:  true
+!
+! ! xterm
+XTerm*bellIsUrgent:  true
