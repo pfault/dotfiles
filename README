@@ -1,1 +1,16 @@
 PFault's dotfiles ;)
+
+Required packages:
+
+mpd
+mpc
+ncmpcpp
+compton
+unclutter
+lua-sockets
+luafilesystem
+vicious
+wicd-gtk
+rxvt-unicode
+urxvt-perls
+xscreensaver
