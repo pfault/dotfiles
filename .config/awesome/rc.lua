@@ -18,7 +18,6 @@ local scratch = require("scratch")
 local menubar = require("menubar")
 local calendar2 = require('calendar2')
 local awesompd = require("awesompd/awesompd")
-local taskwarrior = require("taskwarrior")
 local lfs = require("lfs")
 
 -- {{{ Error handling
