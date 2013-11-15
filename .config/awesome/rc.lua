@@ -18,6 +18,7 @@ local scratch = require("scratch")
 local menubar = require("menubar")
 local calendar2 = require('calendar2')
 local awesompd = require("awesompd/awesompd")
+local taskwarrior = require("taskwarrior")
 local lfs = require("lfs")
 
 -- {{{ Error handling
@@ -75,6 +76,7 @@ end
 -- autostart applications
 run_once("urxvtd")
 run_once("mpd")
+run_once("mpdas","-c /home/pfault/.mpdasrc")
 run_once("wicd-gtk","-t","/usr/bin/python2 -O /usr/share/wicd/gtk/wicd-client.py")
 run_once("unclutter","-idle 10")
 run_once("compton")
@@ -141,11 +143,59 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
+--if beautiful.wallpaper then
+--    for s = 1, screen.count() do
+--        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+--    end
+--end
+
+
+
+
+-- configuration - edit to your liking
+-- seed and "pop a few"
+math.randomseed( os.time())
+for i=1,1000 do tmp=math.random(0,1000) end
+wp_index = 1
+wp_timeout  = 30
+wp_path = "/home/pfault/Pictures/wallpapers/"
+
+
+function string.ends(String,End)
+    return End=='' or string.sub(String,-string.len(End))==End
 end
+
+-- for key,value in pairs(wp_files) do print(key,value) end
+ 
+-- setup the timer
+wp_timer = timer { timeout = wp_timeout }
+wp_timer:connect_signal("timeout", function()
+ 
+  wp_files = {}
+  for file in lfs.dir(wp_path) do
+    if string.ends(file,".jpg") then
+      wp_files[#wp_files+1] = file
+    end
+  end
+
+  -- set wallpaper to current index
+  for s = 1, screen.count() do
+      gears.wallpaper.maximized( wp_path .. wp_files[wp_index] , s, true)
+  end
+ 
+  -- stop the timer (we don't need multiple instances running at the same time)
+  wp_timer:stop()
+ 
+  -- get next random index
+  wp_index = math.random( 1, #wp_files)
+ 
+  --restart the timer
+  wp_timer.timeout = wp_timeout
+  wp_timer:start()
+end)
+ 
+-- initial start when rc.lua is first run
+wp_timer:start()
 -- }}}
 
 -- {{{ Tags
@@ -430,6 +480,7 @@ musicwidget:register_buttons({ { "", awesompd.MOUSE_LEFT, musicwidget:command_to
                                  { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
                                  { modkey, "Pause", musicwidget:command_playpause() } })
 musicwidget:run() -- After all configuration is done, run the widget
+
 
 -- {{{ Battery
 -- Battery attributes
