@@ -1,0 +1,89 @@
+##################################################
+# General definitions
+##################################################
+
+[general]
+
+# This specifies where offlineimap is to store its metadata.
+# This directory will be created if it does not already exist.
+
+metadata = ~/.offlineimap
+
+accounts = pfault,martinschrodi
+
+maxsyncaccounts = 2
+ui = basic
+socktimeout = 60
+
+# By default, OfflineIMAP will use fsync() to force data out to disk at
+# opportune times to ensure consistency.  This can, however, reduce
+# performance.  Users where /home is on SSD (Flash) may also wish to reduce
+# write cycles.  Therefore, you can disable OfflineIMAP's use of fsync().
+# Doing so will come at the expense of greater risk of message duplication
+# in the event of a system crash or power loss.  Default is fsync = true.
+# Set fsync = false to disable fsync.
+#
+fsync = false
+
+##################################################
+# Accounts
+##################################################
+
+[Account pfault]
+localrepository = LocalPFault
+remoterepository = RemotePFault
+
+presynchook = imapfilter -c ~/.mutt/imapfilter-pfault.py -l ~/.mutt/imapfilter-pfault.log
+postsynchook = notmuch new
+
+status_backend = sqlite
+
+
+[Account martinschrodi]
+localrepository = LocalMartinSchrodi
+remoterepository = RemoteMartinSchrodi
+
+presynchook = imapfilter -c ~/.mutt/imapfilter-martinschrodi.py -l ~/.mutt/imapfilter-martinschrodi.log
+postsynchook = notmuch new
+
+status_backend = sqlite
+
+
+[Repository LocalPFault]
+type = Maildir
+localfolders = ~/Mail/pfault
+
+
+[Repository LocalMartinSchrodi]
+type = Maildir
+localfolders = ~/Mail/martinschrodi
+
+
+[Repository RemoteMartinSchrodi]
+type = IMAP
+remotehost = imap.domain.tld
+ssl = yes
+cert_fingerprint = FDC199F0BA4B038D01D8C4D1FF95CB79B068588C
+remoteuser = martin.schrodi@domain.tld
+remotepassfile = ~/.Password.IMAP.MartinSchrodi
+usecompression = no
+maxconnections = 4
+
+
+[Repository RemotePFault]
+type = IMAP
+remotehost = imap.domain.tld
+ssl = yes
+cert_fingerprint = FDC199F0BA4B038D01D8C4D1FF95CB79B068588C
+remoteuser = pfault@domain.tld
+remotepassfile = ~/.Password.IMAP.PFault
+usecompression = no
+maxconnections = 4
+
+[mbnames]
+enabled  = yes
+filename = ~/.mutt/mailboxes
+header   = "mailboxes "
+peritem  = "+%(accountname)s/%(foldername)s"
+sep      = " "
+footer   = "\n"

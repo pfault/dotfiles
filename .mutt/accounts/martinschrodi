@@ -1,0 +1,13 @@
+# vim: ft=muttrc
+set from          = "martin.schrodi@f4n.de"
+set sendmail      = "/usr/bin/msmtp -a martinschrodi"
+set mbox          = "+martinschrodi/archive"
+set postponed     = "+martinschrodi/Drafts"
+set query_command = "goobook query '%s'"
+set realname      = "Martin Schrodi"
+set signature     = ~/.mutt/accounts/martinschrodi.signature
+
+macro index ,c "<change-folder>+pfault/INBOX<enter>" "change accounts"
+macro index ,z "<shell-escape>offlineimap -o -a martinschrodi<enter>" "sync IMAP"
+macro index D "<save-message>+martinschrodi/Trash<enter>" "move message to the trash"
+macro index S "<save-message>+martinschrodi/Junk<enter>"  "mark message as spam"
