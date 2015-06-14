@@ -414,7 +414,7 @@ statusbar = {
 settings = {
   core = { real_name = "PFault"; user_name = "pfault"; nick = "PFault"; };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { theme = "fear2"; term_charset = "utf-8"; };
+  "fe-common/core" = { theme = "fear2"; term_charset = "utf-8"; autolog = "yes"; autolog_path = "~/irclogs/%Y/$tag/$0.%m-%d.log";};
   "perl/core/scripts" = {
     awl_block = "-14";
     awl_display_key = "$Q%K|$N%n $H$C$S";

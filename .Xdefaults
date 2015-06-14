@@ -44,13 +44,13 @@ URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select
 URxvt.keysym.M-u:     perl:url-select:select_next
 URxvt.url-launcher:   /usr/bin/chromium
 URxvt.underlineURLs:  True
-URxvt.matcher.button: 1 
+URxvt.matcher.button: 1
 URxvt.keysym.M-Escape:perl:keyboard-select:activate
 URxvt.keysym.M-c:     perl:clipboard:copy
 URxvt.keysym.M-v:     perl:clipboard:paste
 URxvt.keysym.M-C-v:   perl:clipboard:paste_escaped
-!URxvt.copyCommand:   xsel -ib
-!URxvt.pasteCommand:  xsel -ob
+URxvt.copyCommand:   xsel -ib
+URxvt.pasteCommand:  xsel -ob
 !
 ! rxvt-unicode
 URxvt.urgentOnBell:  true
