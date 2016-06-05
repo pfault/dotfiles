@@ -73,7 +73,7 @@ end
 --end
 
 -- autostart applications
-run_once("urxvtd")
+run_once("copyq")
 run_once("mpd")
 run_once("mpdas","-c /home/pfault/.mpdasrc")
 run_once("wicd-gtk","-t","/usr/bin/python2 -O /usr/share/wicd/gtk/wicd-client.py")
@@ -101,7 +101,7 @@ language = string.gsub(os.getenv("LANG"), ".utf8", "")
 beautiful.init(active_theme .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+terminal = "st"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 gui_editor = "gvim"
@@ -976,7 +976,7 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "URxvt" },
+    { rule = { class = "st-256color" },
       properties = { floating = false, opacity = 0.8 } },
     { rule = { name = "irssi" },
       properties = { tag = tags[1][9] } },
