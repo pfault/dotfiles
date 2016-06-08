@@ -45,7 +45,8 @@ Plugin 'terryma/vim-multiple-cursors'
 
 Plugin 'easymotion/vim-easymotion'
 
-Plugin 'Townk/vim-autoclose'
+" Plugin 'Townk/vim-autoclose'
+Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
 
 Plugin 'kien/ctrlp.vim'
@@ -403,9 +404,6 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
     let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
   elseif executable('ack')
     let s:ctrlp_fallback = 'ack %s --nocolor -f'
-  " On Windows use "dir" as fallback command.
-  elseif WINDOWS()
-    let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
   else
     let s:ctrlp_fallback = 'find %s -type f'
   endif

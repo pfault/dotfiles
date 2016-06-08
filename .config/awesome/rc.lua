@@ -75,7 +75,7 @@ end
 -- autostart applications
 run_once("copyq")
 run_once("mpd")
-run_once("mpdas","-c /home/pfault/.mpdasrc")
+run_once("mpdas","-c ~/.mpdasrc")
 run_once("wicd-gtk","-t","/usr/bin/python2 -O /usr/share/wicd/gtk/wicd-client.py")
 run_once("unclutter","-idle 10")
 run_once("compton")
@@ -157,7 +157,7 @@ math.randomseed( os.time())
 for i=1,1000 do tmp=math.random(0,1000) end
 wp_index = 1
 wp_timeout  = 30
-wp_path = "/home/pfault/Pictures/wallpapers/"
+wp_path = home .. "/Pictures/wallpapers/"
 
 
 function string.ends(String,End)
@@ -441,7 +441,7 @@ musicwidget.scrolling = true -- If true, the text in the widget will be scrolled
 musicwidget.output_size = 30 -- Set the size of widget in symbols
 musicwidget.update_interval = 10 -- Set the update interval in seconds
 -- Set the folder where icons are located (change username to your login name)
-musicwidget.path_to_icons = "/home/pfault/.config/awesome/awesompd/icons" 
+musicwidget.path_to_icons = home .. "/.config/awesome/awesompd/icons" 
 -- Set the default music format for Jamendo streams. You can change
 -- this option on the fly in awesompd itself.
 -- possible formats: awesompd.FORMAT_MP3, awesompd.FORMAT_OGG
@@ -454,7 +454,7 @@ musicwidget.show_album_cover = true
 musicwidget.album_cover_size = 50
 -- This option is necessary if you want the album covers to be shown
 -- for your local tracks.
-musicwidget.mpd_config = "/home/pfault/.mpdconf"
+musicwidget.mpd_config = home .. "/.mpdconf"
 -- Specify the browser you use so awesompd can open links from
 -- Jamendo in it.
 musicwidget.browser = "chromium"
@@ -873,9 +873,11 @@ globalkeys = awful.util.table.join(
     awful.key({modkey,            }, "F1",     function () awful.screen.focus(1) end),
     awful.key({modkey,            }, "F2",     function () awful.screen.focus(2) end),
     awful.key({modkey,            }, "F3",     function () awful.screen.focus(3) end),
+    awful.key({modkey,            }, "F4",     function () awful.screen.focus(4) end),
     awful.key({ modkey, "Shift"   }, "F1", function (c) awful.client.movetoscreen(c, 1) end),
     awful.key({ modkey, "Shift"   }, "F2", function (c) awful.client.movetoscreen(c, 2) end),
     awful.key({ modkey, "Shift"   }, "F3", function (c) awful.client.movetoscreen(c, 3) end),
+    awful.key({ modkey, "Shift"   }, "F4", function (c) awful.client.movetoscreen(c, 4) end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
@@ -892,6 +894,8 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86Display", xrandr),
     awful.key({ modkey, "Control" }, "p", xrandr),
     awful.key({ modkey,           }, "`", function () scratch.drop(terminal, "top", "center", 1, 0.16) end),
+    awful.key({  }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/screenshots/ 2>/dev/null'") end),
+    awful.key({ modkey, "Control" }, "Print", function () awful.util.spawn("scrot -s -e 'mv $f ~/Pictures/screenshots/ 2>/dev/null'") end),
     -- Escape from keyboard focus trap (eg Flash plugin in Firefox)
     awful.key({ modkey, "Control" }, "Escape", function ()
          awful.util.spawn("xdotool getactivewindow mousemove --window %1 0 0 click --clearmodifiers 2")
