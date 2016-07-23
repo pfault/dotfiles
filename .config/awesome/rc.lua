@@ -76,7 +76,7 @@ end
 run_once("copyq")
 run_once("mpd")
 run_once("mpdas","-c ~/.mpdasrc")
-run_once("wicd-gtk","-t","/usr/bin/python2 -O /usr/share/wicd/gtk/wicd-client.py")
+--run_once("wicd-gtk","-t","/usr/bin/python2 -O /usr/share/wicd/gtk/wicd-client.py")
 run_once("unclutter","-idle 10")
 run_once("compton")
 run_once("xscreensaver","-no-splash")
@@ -263,6 +263,10 @@ function gradient(color, to_color, min, max, value)
         return tonumber(c:sub(2,3),16), tonumber(c:sub(4,5),16), tonumber(c:sub(6,7),16)
     end
 
+    function truncate(x) 
+        return x<0 and math.ceil(x) or math.floor(x) 
+    end
+
     local factor = 0
     if (value >= max ) then 
         factor = 1  
@@ -278,7 +282,7 @@ function gradient(color, to_color, min, max, value)
     blue  = blue  + (factor * (to_blue  - blue))
 
     -- dec2color
-    return string.format("#%02x%02x%02x", red, green, blue)
+    return string.format("#%02x%02x%02x", truncate(red), truncate(green), truncate(blue))
 end
 
 
@@ -375,32 +379,32 @@ txgraph = awful.widget.graph()
 txgraph:set_width(netwidth):set_height(graphheight)
 txgraph:set_background_color(beautiful.bg_widget)
 txgraph:set_color({ type = "linear", from = { 0, 0 }, to = { 0, graphheight }, stops = { { 0, "#"..beautiful.fg_widget }, { 0.5, "#"..beautiful.fg_center_widget }, { 1, "#"..beautiful.fg_end_widget } }})
-vicious.register(txgraph, vicious.widgets.net, "${enp0s25 up_kb}")
+vicious.register(txgraph, vicious.widgets.net, "${wlp2s0 up_kb}")
 
 -- TX total
 txwidget = wibox.widget.textbox()
 vicious.register(txwidget, vicious.widgets.net,
-  "<span color='" .. beautiful.fg_em .. "'>TX enp0s25: </span>${enp0s25 tx_mb}MB", 19)
+  "<span color='" .. beautiful.fg_em .. "'>TX wlp2s0: </span>${wlp2s0 tx_mb}MB", 19)
 
 -- TX speed
 txspeed = wibox.widget.textbox()
-vicious.register(txspeed, vicious.widgets.net, "${enp0s25 up_kb}Kb", 2)
+vicious.register(txspeed, vicious.widgets.net, "${wlp2s0 up_kb}Kb", 2)
 
 -- RX graph
 rxgraph = awful.widget.graph()
 rxgraph:set_width(netwidth):set_height(graphheight)
 rxgraph:set_background_color(beautiful.bg_widget)
 rxgraph:set_color({ type = "linear", from = { 0, 0 }, to = { 0, graphheight }, stops = { { 0, "#"..beautiful.fg_widget }, { 0.5, "#"..beautiful.fg_center_widget }, { 1, "#"..beautiful.fg_end_widget } }})
-vicious.register(rxgraph, vicious.widgets.net, "${enp0s25 down_kb}")
+vicious.register(rxgraph, vicious.widgets.net, "${wlp2s0 down_kb}")
 
 -- RX total
 rxwidget = wibox.widget.textbox()
 vicious.register(rxwidget, vicious.widgets.net,
-  "<span color='" .. beautiful.fg_em .. "'>RX enp0s25: </span>${enp0s25 rx_mb}MB", 17)
+  "<span color='" .. beautiful.fg_em .. "'>RX wlp2s0: </span>${wlp2s0 rx_mb}MB", 17)
 
 -- RX speed
 rxspeed = wibox.widget.textbox()
-vicious.register(rxspeed, vicious.widgets.net, "${enp0s25 down_kb}Kb", 2)
+vicious.register(rxspeed, vicious.widgets.net, "${wlp2s0 down_kb}Kb", 2)
 
 -- }}}
 
