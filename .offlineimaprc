@@ -1,89 +1,51 @@
-##################################################
-# General definitions
-##################################################
-
 [general]
+accounts = accountname
+ui = ttyui
 
-# This specifies where offlineimap is to store its metadata.
-# This directory will be created if it does not already exist.
+[Account accountname]
+localrepository = accountname-local
+remoterepository = accountname-remote
+autorefresh = 0.5
+quick = 10
+newmail_hook = ~/bin/mail.sh
+postsynchook = ~/bin/mail.sh
 
-metadata = ~/.offlineimap
-
-accounts = pfault,martinschrodi
-
-maxsyncaccounts = 2
-ui = basic
-socktimeout = 60
-
-# By default, OfflineIMAP will use fsync() to force data out to disk at
-# opportune times to ensure consistency.  This can, however, reduce
-# performance.  Users where /home is on SSD (Flash) may also wish to reduce
-# write cycles.  Therefore, you can disable OfflineIMAP's use of fsync().
-# Doing so will come at the expense of greater risk of message duplication
-# in the event of a system crash or power loss.  Default is fsync = true.
-# Set fsync = false to disable fsync.
-#
-fsync = false
-
-##################################################
-# Accounts
-##################################################
-
-[Account pfault]
-localrepository = LocalPFault
-remoterepository = RemotePFault
-
-presynchook = imapfilter -c ~/.mutt/imapfilter-pfault.py -l ~/.mutt/imapfilter-pfault.log
-postsynchook = notmuch new
-
-status_backend = sqlite
-
-
-[Account martinschrodi]
-localrepository = LocalMartinSchrodi
-remoterepository = RemoteMartinSchrodi
-
-presynchook = imapfilter -c ~/.mutt/imapfilter-martinschrodi.py -l ~/.mutt/imapfilter-martinschrodi.log
-postsynchook = notmuch new
-
-status_backend = sqlite
-
-
-[Repository LocalPFault]
+[Repository accountname-local]
 type = Maildir
-localfolders = ~/Mail/pfault
+localfolders = ~/mail/accountname
+# Spaces in pathname are bad. Lets use `archive` which is a simple word
+# Besides, we only need `All Mail` folder. 
+# Sup would manage mails on its own.
+# If your GMail language setting is not English, you can execute 
+# `offlineimap --info` to find out the name of folder which is 
+# translated and encoded after your account is configured.
+nametrans = lambda folder: {'archive': '[Gmail]/All Mail',}.get(folder, folder)
 
-
-[Repository LocalMartinSchrodi]
-type = Maildir
-localfolders = ~/Mail/martinschrodi
-
-
-[Repository RemoteMartinSchrodi]
-type = IMAP
-remotehost = imap.domain.tld
-ssl = yes
-cert_fingerprint = FDC199F0BA4B038D01D8C4D1FF95CB79B068588C
-remoteuser = martin.schrodi@domain.tld
-remotepassfile = ~/.Password.IMAP.MartinSchrodi
-usecompression = no
-maxconnections = 4
-
-
-[Repository RemotePFault]
-type = IMAP
-remotehost = imap.domain.tld
-ssl = yes
-cert_fingerprint = FDC199F0BA4B038D01D8C4D1FF95CB79B068588C
-remoteuser = pfault@domain.tld
-remotepassfile = ~/.Password.IMAP.PFault
-usecompression = no
-maxconnections = 4
-
-[mbnames]
-enabled  = yes
-filename = ~/.mutt/mailboxes
-header   = "mailboxes "
-peritem  = "+%(accountname)s/%(foldername)s"
-sep      = " "
-footer   = "\n"
+[Repository accountname-remote]
+# IMAP with hardcoded GMail config
+type = Gmail
+realdelete = no
+# The path of ca-certfile might be different on your system.
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Remember that GMail requires full mail address as username
+remoteuser = account@serv.tld
+remotepass = pwhere
+nametrans = lambda folder:	re.sub('\[Gmail\]\/All Mail', 'archive',
+				re.sub('\[Gmail\]\/Drafts', 'drafts',
+				re.sub('\[Gmail\]\/Important', 'important',
+				re.sub('\[Gmail\]\/Sent Mail', 'sent',
+				re.sub('\[Gmail\]\/Spam', 'spam',
+				re.sub('\[Gmail\]\/Starred', 'flagged',
+				re.sub('\[Gmail\]\/Trash', 'trash',
+				re.sub('INBOX', 'INBOX',
+				re.sub('Misc', 'misc',
+				re.sub('Priority', 'priority',
+				re.sub('Follow up', 'follow_up', folder)))))))))))
+folderfilter = lambda folder: folder in ['[Gmail]/All Mail', '[Gmail]/Drafts',
+					 '[Gmail]/Important', '[Gmail]/Sent Mail',
+					 '[Gmail]/Spam', '[Gmail]/Starred',
+					 '[Gmail]/Trash', 'INBOX']
+# Or, if you have a lot of mail and don't want to wait for a long time before
+# using sup, you can archive all your old mails on Gmail and only sync the
+# inbox with the following line replacing the previous `folderfilter` line:
+# folderfilter = lambda folder: folder == 'INBOX'

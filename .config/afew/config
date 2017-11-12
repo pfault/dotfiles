@@ -1,0 +1,39 @@
+[SpamFilter]
+[KillThreadsFilter]
+[ListMailsFilter]
+[SentMailsFilter]
+sent_tag = sent
+[ArchiveSentMailsFilter]
+
+
+[Filter.2]
+message = "Spam"
+query = 'from:"Global Who\'sWho" OR from:Touchfire OR from:Walk-inTub OR from:"Replacement Window"'
+tags = +spam;-new
+
+[Filter.3]
+message = "Pingdom"
+query = 'from:alert@pingdom.com'
+tags = +pingdom;+monitoring;-inbox;
+
+[Filter.4]
+message = "Grafana"
+query = 'from:Grafana'
+tags = +grafana;+monitoring;-inbox;
+
+[Filter.5]
+message = "Check_MK"
+query = 'subject:Check_MK'
+tags = +checkmk;+monitoring;-inbox;
+
+[Filter.6]
+message = "Graylog"
+query = 'from:graylog@thinxnet.com'
+tags = +graylog;+monitoring;-inbox;
+
+[Filter.7]
+message = "Server Density"
+query = 'from:alerts@serverdensity.com'
+tags = +serverdensity;+monitoring;-inbox;
+
+[InboxFilter]
