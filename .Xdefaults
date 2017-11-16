@@ -4,7 +4,7 @@ URxvt*termName: xterm-256color
 URxvt*scrollBar_right: false
 URxvt*scrollBar: false
 URxvt*borderLess: false
-URxvt*cutchars: `"()'*<>[]{|}
+URxvt*cutchars: "`\"()'*<>[]{|}"
 ## teh transparency stuff
 URxvt.depth:      32
 !URxvt.background: rgba:3f00/3f00/3f00/dddd
@@ -18,7 +18,7 @@ URxvt*shading: 20
 ## geometry and font
 URxvt*geometry: 84×24
 ##!URxvt*font: xft:terminus:pixelsize=12
-URxvt.font: xft:terminus:autohint=true:antialias=true:pixelsize=12
+##URxvt.font: xft:terminus:autohint=true:antialias=true:pixelsize=10
 ## change default colors
 ##URxvt*background: #000000
 ##URxvt*foreground: #00AA00
@@ -40,7 +40,7 @@ URxvt.font: xft:terminus:autohint=true:antialias=true:pixelsize=12
 ##URxvt*color15: #F8FCF8
 urxvt*perl-lib:         /usr/lib/urxvt/perl/
 !-*- Perl extensions -*-
-URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select
+URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select,selection-to-clipboard
 URxvt.keysym.M-u:     perl:url-select:select_next
 URxvt.url-launcher:   /usr/bin/chromium
 URxvt.underlineURLs:  True
