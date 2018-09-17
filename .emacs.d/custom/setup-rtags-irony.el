@@ -89,8 +89,9 @@
 
 (use-package flycheck
   :init)
-(add-hook 'c++-mode-hook 'flycheck-mode)
-(add-hook 'c-mode-hook 'flycheck-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+;;(add-hook 'c++-mode-hook 'flycheck-mode)
+;;(add-hook 'c-mode-hook 'flycheck-mode)
 
 (use-package flycheck-rtags)
 

@@ -3,7 +3,9 @@
 ;;
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(use-package org-plus-contrib)
+(put 'org-hugo-auto-export-on-save 'safe-local-variable #'booleanp)
+(use-package org
+  :ensure org-plus-contrib)
 (require 'org)
 
 (global-set-key "\C-cl" 'org-store-link)
@@ -1398,5 +1400,21 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-latex-minted-options '(("breaklines" "true")
                                  ("breakanywhere" "true")))
+
+(use-package ox-hugo
+  :after ox)
+
+(require 'ox-hugo-auto-export)
+
+(use-package prodigy)
+
+(prodigy-define-service
+  :name "Hugo Personal Blog"
+  :command "/usr/bin/hugo"
+  :args '("server" "-D" "--navigateToChanged" "-t" "hugo-future-imperfect")
+  :cwd "~/f4n-de"
+  :tags '(personal)
+  :stop-signal 'sigkill
+  :kill-process-buffer-on-stop t)
 
 (provide 'setup-org)
