@@ -778,7 +778,7 @@ A prefix arg forces clock in of the default task."
           'append)
 
 (defun bh/restrict-to-file-or-follow (arg)
-  "Set agenda restriction to 'file or with argument invoke follow mode.
+  "Set agenda restriction to 'file or with ARG invoke follow mode.
 I don't use follow mode very often but I restrict to file all the time
 so change the default 'F' binding in the agenda to allow both"
   (interactive "p")
@@ -787,7 +787,7 @@ so change the default 'F' binding in the agenda to allow both"
     (widen)
     (bh/set-agenda-restriction-lock 4)
     (org-agenda-redo)
-    (beginning-of-buffer)))
+    (goto-char(point-min))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "F" 'bh/restrict-to-file-or-follow))
@@ -1406,13 +1406,14 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (require 'ox-hugo-auto-export)
 
+
 (use-package prodigy)
 
 (prodigy-define-service
   :name "Hugo Personal Blog"
   :command "/usr/bin/hugo"
-  :args '("server" "-D" "--navigateToChanged" "-t" "hugo-future-imperfect")
-  :cwd "~/f4n-de"
+  :args '("server" "-D" "--navigateToChanged")
+  :cwd "~/git/f4n.de-website"
   :tags '(personal)
   :stop-signal 'sigkill
   :kill-process-buffer-on-stop t)

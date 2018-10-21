@@ -75,6 +75,7 @@
   :init
   (projectile-global-mode)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (setq projectile-completion-system 'ivy)
   (setq projectile-enable-caching t))
 
 ;; Package zygospore
@@ -83,6 +84,8 @@
          ("RET" .   newline-and-indent)))
 
   ; automatically indent when press RET
+
+(use-package restclient)
 
 ;; activate whitespace-mode to view all whitespace characters
 (global-set-key (kbd "C-c w") 'whitespace-mode)

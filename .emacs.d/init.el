@@ -21,10 +21,25 @@
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "chromium")
 
+(defun package-menu-find-marks ()
+  "Find packages marked for action in *Packages*."
+  (interactive)
+  (occur "^[A-Z]"))
+
+(defun package-menu-filter-by-status (status)
+  "Filter the *Packages* buffer by status."
+  (interactive
+   (list (completing-read
+          "Status: " '("new" "installed" "dependency" "obsolete"))))
+  (package-menu-filter (concat "status:" status)))
+
+(define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
+(define-key package-menu-mode-map "a" #'package-menu-find-marks)
+
 (require 'setup-general)
 (require 'setup-magit)
-(require 'setup-helm)
-(require 'setup-helm-gtags)
+;;(require 'setup-helm)
+;;(require 'setup-helm-gtags)
 (require 'setup-rtags-irony)
 (require 'setup-cedet)
 (require 'setup-editing)
@@ -46,6 +61,8 @@
  '(safe-local-variable-values
    (quote
     ((org-export-allow-bind-keywords . t)
+     (org-hugo-auto-export-on-save . t)
+     (org-export-allow-bind-keywords . t)
      (org-confirm-babel-evaluate)
      (header-auto-update-enabled)))))
 (custom-set-faces

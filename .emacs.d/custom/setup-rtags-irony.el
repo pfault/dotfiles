@@ -8,7 +8,8 @@
     'company-backends 'company-rtags))
 (setq rtags-autostart-diagnostics t)
 (rtags-enable-standard-keybindings)
-(setq rtags-use-helm t)
+;;(setq rtags-use-helm t)
+(setq rtags-display-result-backend 'ivy)
 
 
 (use-package irony
@@ -101,6 +102,8 @@
   (setq-local flycheck-check-syntax-automatically nil))
 ;; c-mode-common-hook is also called by c++-mode
 (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+(add-hook 'c++-mode-hook #'my-flycheck-rtags-setup)
+(add-hook 'objc-mode-hook #'my-flycheck-rtags-setup)
 
 (use-package flycheck-irony
   :init)
