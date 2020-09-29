@@ -1,0 +1,16 @@
+input type:pointer {
+    accel_profile flat
+    pointer_accel -0.2
+}
+
+input type:keyboard {
+    xkb_layout us,de
+    xkb_variant colemak,
+    xkb_options grp:alt_caps_toggle
+}
+
+input type:touchpad {
+    accel_profile flat
+    tap enabled
+    tap_button_map lrm
+}

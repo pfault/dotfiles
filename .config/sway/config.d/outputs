@@ -1,0 +1,13 @@
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+output eDP-1 {
+  position 0 0
+}
+
+output "Toshiba America Info Systems Inc ScreenXpert- 0x00008800" {
+  transform 90
+  position 0 1080
+  scale 2
+}

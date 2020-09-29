@@ -1,0 +1,36 @@
+(use-package sh-script
+  :straight (:type built-in)
+  :mode
+  "\\.tmux\\'"
+  "\\.tmuxsh\\'"
+  "\\.tmuxtheme\\'"
+  "zshenv\\'"
+  "zshrc\\'"
+
+  :bind
+  (:map sh-mode-map
+        ("RET" . newline-and-indent))
+
+  :hook
+  (sh-mode . nexus-sh-mode-setup)
+
+  :custom
+  (sh-basic-offset 2)
+  (sh-indentation 2)
+  (sh-indent-after-continuation 'always)
+
+  :init
+  (defun nexus-sh-mode-setup ()
+    (setq tab-width 2
+          whitespace-action '(auto-cleanup))
+
+    (subword-mode +1)))
+
+(use-package shfmt
+  :hook
+  (sh-mode . shfmt-on-save-mode)
+
+  :custom
+  (shfmt-arguments '("-i" "2" "-ci" "-sr")))
+
+(provide 'nexus-sh)

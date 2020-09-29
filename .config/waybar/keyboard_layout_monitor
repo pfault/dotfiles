@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# prints the current keyboard layout and then any layout changes
+# taken from https://github.com/Alexays/Waybar/pull/85
+
+swaymsg --type get_inputs --raw | \
+  jq --raw-output \
+    '[
+        .[] |
+          select(.type == "keyboard") |
+          .xkb_active_layout_name |
+	  select(contains("English \\(Colemak\\)") | not)
+     ] |
+     first |
+     sub("English \\(Colemak\\)"; "us") | sub("German"; "de")
+    '
+
+swaymsg --type subscribe --monitor --raw '["input"]' | \
+  jq --raw-output --unbuffered \
+    '
+      select(.change == "xkb_layout") |
+        .input.xkb_active_layout_name |
+	sub("English \\(Colemak\\)"; "us") | sub("German"; "de")
+    '
+

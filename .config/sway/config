@@ -1,0 +1,285 @@
+# vim:ft=i3
+
+# global vars
+
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $first_monitor eDP-1
+set $second_monitor HDMI-A-1
+
+set $terminal alacritty
+set $browser firefox
+set $editor emacs
+set $locker exec bash ~/.config/sway/lock.sh
+set $lockman ~/.config/sway/lockman.sh
+set $screenshot_path ~/.config/sway/screenshot.sh
+
+set $menu exec bemenu-run -i -n -p "Run:"  --fn "monospace 14" --hb "#89cff0" --hf "#000000" --tf "#000000" --tb "#2dc7bc" -m$(swaymsg -r -t get_outputs | jq '. | reverse | to_entries | .[] | select(.value.focused == true) | .key') -l 10 
+set $rwofi "wofi --show drun,run"
+
+# includes
+include @sysconfdir@/sway/config.d/*
+include ~/.config/sway/config.d/*
+
+# media keys
+
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioRaiseVolume exec pamixer -i 5 --allow-boost
+bindsym XF86AudioMute exec pamixer -t
+bindsym XF86AudioMicMute exec pamixer --default-source -t
+
+bindsym XF86MonBrightnessDown exec light -U 5%
+bindsym XF86MonBrightnessUp exec light -A 5%
+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioStop exec playerctl stop
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+
+
+# main commands
+
+bindsym $mod+Return exec $terminal
+bindsym $mod+Shift+Return exec $terminal --working-directory $(sway-utils focused-program-cwd)
+
+bindsym $mod+b exec $browser
+bindsym $mod+Shift+b exec $browser --incognito
+
+bindsym $mod+e exec $editor
+
+# bindsym $mod+grave exec rofi -show run -modi run,ssh
+bindsym $mod+grave exec $menu
+bindsym $mod+Shift+grave exec $rwofi
+bindsym $mod+d exec makoctl dismiss
+bindsym $mod+i exec rofi-power
+
+bindsym $mod+Control+u exec $locker
+
+
+# screenshot binds
+bindsym Print exec $screenshot_path full file
+bindsym Print+Shift exec $screenshot_path area file
+bindsym Print+Ctrl exec $screenshot_path full clipboard
+bindsym Print+Ctrl+Shift exec $screenshot_path area clipboard
+
+
+# wm keys
+
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+s splitv
+bindsym $mod+Shift+s splith
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+t layout toggle split
+bindsym $mod+Shift+t layout toggle tabbed split
+
+bindsym $mod+p focus parent
+bindsym $mod+c focus child
+
+bindsym $mod+w kill
+bindsym $mod+Shift+w exec sway-utils focused-program-kill
+
+floating_modifier $mod normal
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+minus move scratchpad
+
+bindsym $mod+Tab workspace back_and_forth
+
+set {
+	$ws1	"1:web"
+	$ws2	"2:code"
+	$ws3	"3:term" 
+	$ws4	"4:work" 
+	$ws5	"5:music"
+	$ws6	"6:docs"
+	$ws7	"7:"
+	$ws8	"8:" 
+	$ws9	"9:"
+	$ws10	"10:misc",
+	$ws11	"11:web"
+	$ws12	"12:code"
+	$ws13	"13:term" 
+	$ws14	"14:work" 
+	$ws15	"15:music"
+	$ws16	"16:docs"
+	$ws17	"17:"
+	$ws18	"18:" 
+	$ws19	"19:"
+	$ws20	"20:misc"
+}
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+bindsym $mod+F1 workspace number $ws11
+bindsym $mod+F2 workspace number $ws12
+bindsym $mod+F3 workspace number $ws13
+bindsym $mod+F4 workspace number $ws14
+bindsym $mod+F5 workspace number $ws15
+bindsym $mod+F6 workspace number $ws16
+bindsym $mod+F7 workspace number $ws17
+bindsym $mod+F8 workspace number $ws18
+bindsym $mod+F9 workspace number $ws19
+bindsym $mod+F10 workspace number $ws20
+bindsym $mod+bracketright workspace next
+bindsym $mod+bracketleft workspace prev
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+F1 move container to workspace number $ws11
+bindsym $mod+Shift+F2 move container to workspace number $ws12
+bindsym $mod+Shift+F3 move container to workspace number $ws13
+bindsym $mod+Shift+F4 move container to workspace number $ws14
+bindsym $mod+Shift+F5 move container to workspace number $ws15
+bindsym $mod+Shift+F6 move container to workspace number $ws16
+bindsym $mod+Shift+F7 move container to workspace number $ws17
+bindsym $mod+Shift+F8 move container to workspace number $ws18
+bindsym $mod+Shift+F9 move container to workspace number $ws19
+bindsym $mod+Shift+F10 move container to workspace number $ws20
+bindsym $mod+Shift+bracketright move container to workspace next
+bindsym $mod+Shift+bracketleft move container to workspace prev
+
+bindsym $mod+Ctrl+1 rename workspace to $ws1
+bindsym $mod+Ctrl+2 rename workspace to $ws2
+bindsym $mod+Ctrl+3 rename workspace to $ws3
+bindsym $mod+Ctrl+4 rename workspace to $ws4
+bindsym $mod+Ctrl+5 rename workspace to $ws5
+bindsym $mod+Ctrl+6 rename workspace to $ws6
+bindsym $mod+Ctrl+7 rename workspace to $ws7
+bindsym $mod+Ctrl+8 rename workspace to $ws8
+bindsym $mod+Ctrl+9 rename workspace to $ws9
+bindsym $mod+Ctrl+0 rename workspace to $ws10
+
+workspace $ws1 output $first_monitor
+workspace $ws2 output $first_monitor
+workspace $ws3 output $first_monitor
+workspace $ws4 output $first_monitor
+workspace $ws5 output $first_monitor
+workspace $ws6 output $first_monitor
+workspace $ws7 output $first_monitor
+workspace $ws8 output $first_monitor
+workspace $ws9 output $first_monitor
+workspace $ws10 output $first_monitor
+workspace $ws11 output $second_monitor
+workspace $ws12 output $second_monitor
+workspace $ws13 output $second_monitor
+workspace $ws14 output $second_monitor
+workspace $ws15 output $second_monitor
+workspace $ws16 output $second_monitor
+workspace $ws17 output $second_monitor
+workspace $ws18 output $second_monitor
+workspace $ws19 output $second_monitor
+workspace $ws20 output $second_monitor
+
+# resize keys
+mode "resize" {
+	# left will shrink the containers width
+	# right will grow the containers width
+	# up will shrink the containers height
+	# down will grow the containers height
+	bindsym $left resize shrink width 10px
+	bindsym $down resize grow height 10px
+	bindsym $up resize shrink height 10px
+	bindsym $right resize grow width 10px
+
+	bindsym Left resize shrink width 10px
+	bindsym Down resize grow height 10px
+	bindsym Up resize shrink height 10px
+	bindsym Right resize grow width 10px
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+
+# settings
+
+font pango:Hack 10px
+seat "*" hide_cursor 5000
+
+focus_follows_mouse yes
+swaynag_command swaynagmode
+output "*" bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+
+exec swayidle -w \
+         timeout 120 'exec bash ~/.config/sway/lock.sh' \
+         timeout 900 'swaymsg "output * dpms off"' \
+              resume 'swaymsg "output * dpms on"' \
+         before-sleep 'exec bash ~/.config/sway/lock.sh'
+
+# colors
+
+# solarized
+
+set $black		#000000
+set $white		#FFFFFF
+set $gray1		#1a1a1a
+set $gray2		#292b2e
+set $gray3		#5f676a
+
+set $base03		#002b36
+set $base02		#073642
+set $base01		#586e75
+set $base00		#657b83
+set $base0		#839496
+set $base1		#93a1a1
+set $base2		#eee8d5
+set $base3		#fdf6e3
+set $yellow		#b58900
+set $orange		#cb4b16
+set $red		#dc322f
+set $magenta	#d33682
+set $violet		#6c71c4
+set $blue		#268bd2
+set $cyan		#2aa198
+set $green		#859900
+
+# class
+#					border	backgr.	text	indica.	child_border
+#client.focused			$red	$gray3	$white	$red	$red
+#client.unfocused		$base00	#222222	#888888	#292d2e	#222222
+

@@ -1,0 +1,130 @@
+//[
+//    {
+//        "layer": "top",
+//        "output": "HDMI-A-1",
+//        "modules-left": ["sway/workspaces","sway/mode"],
+//        "modules-center": ["sway/window"],
+//        "modules-right": ["pulseaudio", "tray", "clock"],
+//    },{
+//        "output": ["eDP-1"],
+//        "modules-left": ["sway/workspaces","sway/mode", "custom/spotify"],
+//        "modules-center": ["sway/window"],
+//        "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "custom/keyboard_layout", "clock"],
+//    }
+//    ],
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar at the bottom of your screen
+    "height": 24, // Waybar height
+    // "width": 1366, // Waybar width
+    // Choose the order of the modules
+    
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "custom/keyboard_layout", "clock"],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1:web": "",
+            "2:code": "",
+            "3:term": "",
+            "4:work": "",
+            "5:music": "",
+            "6:docs": "",
+            "10:misc": "",
+            "11:web": "",
+            "12:code": "",
+            "13:term": "",
+            "14:work": "",
+            "15:music": "",
+            "16:docs": "",
+            "20:misc": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        },
+        "persistent_workspaces": {
+             "1:web": ["eDP-1"],
+             "2:code": ["eDP-1"],
+             "3:term": ["eDP-1"],
+             "4:work": ["eDP-1"],
+             "5:music": ["eDP-1"],
+             "6:docs": ["eDP-1"],
+             "10:misc": ["eDP-1"],
+             "11:web": ["HDMI-A-1"],
+             "12:code": ["HDMI-A-1"],
+             "13:term": ["HDMI-A-1"],
+             "14:work": ["HDMI-A-1"],
+             "15:music": ["HDMI-A-1"],
+             "16:docs": ["HDMI-A-1"],
+             "20:misc": ["HDMI-A-1"]
+}
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip": true,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "format": "{usage}% "
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "battery": {
+        "bat": "BAT0",
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) {ipaddr}/{cidr} ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "networkmanager_dmenu"
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/spotify": {
+        "format": " {}",
+        "max-length": 40,
+        "interval": 30, // Remove this if your script is endless and write in loop
+        "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
+        "exec-if": "pgrep spotify"
+    },
+    "custom/keyboard_layout": {
+	"format": "{} ⌨️ ",
+	"exec": "$HOME/.config/waybar/keyboard_layout_monitor"
+	//"on-click": "keyboard_layout_switcher"
+    }
+}

@@ -1,0 +1,1 @@
+bindsym Control+Shift+1 exec copyq toggle

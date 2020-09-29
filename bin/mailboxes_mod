@@ -1,3 +1,0 @@
-#!/bin/sh
-cat /home/pfault/.mutt/mailboxes | grep -oE '\"\+official\/[0-9A-Za-z\-\.]*\"' | xargs -i~~ echo "mailboxes \"~~\"" > /home/pfault/.mutt/martin.schrodi-f4n.de.mailboxes && cat .mutt/mailboxes | grep -oE '\"\+pfault\/[0-9A-Za-z\-\.]*\"' | xargs -i~~ echo "mailboxes \"~~\"" > /home/pfault/.mutt/pfault-f4n.de.mailboxes
-notmuch new
