@@ -1,5 +1,5 @@
 (use-package rainbow-mode
   :defer t
-  :diminish raindbox-mode)
+  :diminish rainbow-mode)
 
 (provide 'nexus-rainbow)

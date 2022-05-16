@@ -22,15 +22,15 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-git-mode 'deferred)
-
-  (treemacs-define-doubleclick-action
-   'file-node-open   #'treemacs-visit-node-in-most-recently-used-window)
-  (treemacs-define-doubleclick-action
-   'file-node-closed #'treemacs-visit-node-in-most-recently-used-window)
-  (treemacs-define-RET-action
-   'file-node-open   #'treemacs-visit-node-in-most-recently-used-window)
-  (treemacs-define-RET-action
-   'file-node-closed #'treemacs-visit-node-in-most-recently-used-window))
+)
+  ;; (treemacs-define-doubleclick-action
+  ;;  'file-node-open   #'treemacs-visit-node-in-most-recently-used-window)
+  ;; (treemacs-define-doubleclick-action
+  ;;  'file-node-closed #'treemacs-visit-node-in-most-recently-used-window)
+  ;; (treemacs-define-RET-action
+  ;;  'file-node-open   #'treemacs-visit-node-in-most-recently-used-window)
+  ;; (treemacs-define-RET-action
+  ;;  'file-node-closed #'treemacs-visit-node-in-most-recently-used-window))
 
 (use-package treemacs-all-the-icons
   :defer t

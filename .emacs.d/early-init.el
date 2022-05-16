@@ -1,5 +1,13 @@
 ;; Native-Comp
-(setq comp-speed 2)
+(setq comp-speed 2
+      comp-async-query-on-exit t)
+
+(setq comp-deferred-compilation-deny-list
+      '("\\(?:[/\\\\]\\.dir-locals\\.el$\\)"
+        ;; Don't native-compile *-authloads.el and *-pkg.el files as they
+        ;; seem to produce errors during native-compile.
+        "\\(?:[^z-a]*-autoloads\\.el$\\)"
+        "\\(?:[^z-a]*-pkg\\.el$\\)"))
 
 (when (boundp 'comp-eln-load-path)
   (let ((eln-cache-dir (expand-file-name "cache/eln-cache/"
@@ -10,7 +18,8 @@
     ;; sized *.eln files behind. Hence delete such files during startup.
     (when find-exec
       (call-process find-exec nil nil nil eln-cache-dir
-                    "-name" "*.eln" "-size" "0" "-delete"))))
+                    "-name" "*.eln" "-size" "0" "-delete" "-or"
+                    "-name" "*.eln.tmp" "-size" "0" "-delete"))))
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)

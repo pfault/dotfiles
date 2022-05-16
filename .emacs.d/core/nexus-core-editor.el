@@ -1,3 +1,20 @@
+(use-package auth-source-pass
+  :ensure password-store
+  :init
+  (auth-source-pass-enable)
+  :config
+  ;; Make sure it's the only mechanism
+  (setq auth-sources '(password-store))
+  (setq auth-source-pass-filename "~/.local/share/gopass/stores/root/")
+  (setq auth-source-gpg-encrypt-to (list user-mail-address)))
+
+;; Use my email-address for encryption
+(setq-default epa-file-encrypt-to user-mail-address)
+;; Make sure we always use this
+(setq-default epa-file-select-keys nil)
+
+(setq epa-pinentry-mode 'loopback)
+
 ;; don't use tabs to indent
 (setq-default indent-tabs-mode nil)
 
@@ -56,6 +73,8 @@
 
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
+;; Also for dired
+(setq global-auto-revert-non-file-buffers t)
 
 ;; diminish keeps the modeline tidy
 (use-package diminish)
@@ -175,7 +194,5 @@ indent yanked text (with prefix arg don't indent)."
 ;; saner regex syntax
 (require 're-builder)
 (setq reb-re-syntax 'string)
-
-
 
 (provide 'nexus-core-editor)

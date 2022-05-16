@@ -1,5 +1,8 @@
+;; Initialize straight.el
 (setq straight-cache-autoloads t
       straight-check-for-modifications '(check-on-save find-when-checking)
+      straight-profiles '((nil . "default.el")
+                          (pinned . "pinned.el"))
       straight-repository-branch "develop"
       straight-use-package-by-default t
       use-package-always-ensure nil)
@@ -18,13 +21,14 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; https://github.com/raxod502/straight.el/issues/49#issuecomment-395979478
-(defun straight-x-clean-unused-repos ()
-  (interactive)
-  (dolist (repo (straight--directory-files (straight--repos-dir)))
-    (unless (or (straight--checkhash repo straight--repo-cache)
-                (not (y-or-n-p (format "Delete repository %S?" repo))))
-      (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
+(autoload 'straight-x-clean-unused-repos "straight-x" nil t)
+(autoload 'straight-x-pull-all "straight-x" nil t)
+(autoload 'straight-x-freeze-versions "straight-x" nil t)
+(autoload 'straight-x-thaw-pinned-versions "straight-x" nil t)
+
+(defun straight-x-pin-package (package gitsha)
+  (add-to-list 'straight-x-pinned-packages
+               `(,package . ,gitsha)))
 
 (straight-use-package 'use-package)
 

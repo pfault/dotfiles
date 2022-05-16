@@ -1,5 +1,3 @@
-(require 'nexus-ido)
-
 (use-package flyspell
   :straight (:type built-in)
   :defer t
@@ -37,6 +35,6 @@
 (use-package flyspell-correct
   :bind ("C-/" . flyspell-correct-wrapper)
   :custom
-  (flyspell-correct-interface #'flyspell-correct-ido))
+  (flyspell-correct-interface #'flyspell-correct-dummy))
 
 (provide 'nexus-flyspell)

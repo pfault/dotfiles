@@ -1,6 +1,3 @@
-(require 'imenu)
-(require 'nexus-helm)
-
 (use-package imenu
   :straight (:type built-in)
 
@@ -11,6 +8,6 @@
 
 (use-package imenu-anywhere
   :bind
-  ("C-c t" . helm-imenu-anywhere))
+  ("C-c t" . imenu-anywhere))
 
 (provide 'nexus-imenu)

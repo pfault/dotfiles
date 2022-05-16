@@ -1,17 +1,23 @@
 (use-package exec-path-from-shell
   :custom
   (exec-path-from-shell-variables '("PATH"
+				    "SSH_AUTH_SOCK"
                                     "MANPATH"
                                     "TMPDIR"
                                     "GOPATH"
+                                    "GOBIN"
+                                    "GOROOT"
+                                    "GOPRIVATE"
+                                    "GOENV_GOPATH_PREFIX"
+                                    "GOENV_VERSION"
                                     "KUBECONFIG"))
   (exec-path-from-shell-arguments '("-l"))
   (exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-debug nil)
 
   :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+  ;(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize));)
 
 ;; Set temporary-file-directory to match TMPDIR environment variable
 (let ((tmpdir (getenv "TMPDIR")))

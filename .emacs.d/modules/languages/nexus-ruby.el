@@ -5,11 +5,10 @@
 (require 'nexus-string-inflection)
 (require 'nexus-toggle-quotes)
 
-(add-to-list 'projectile-globally-ignored-directories "vendor/bundle")
-(add-to-list 'projectile-globally-ignored-directories "vendor/ruby")
 
 (use-package ruby-mode
   :straight (:type built-in)
+  :defer t
   :interpreter "ruby"
   :mode
   "Appraisals\\'"
@@ -60,6 +59,10 @@
   :config
   ;; Use M-' instead to togle quote styles
   (unbind-key "C-c '" ruby-mode-map)
+
+  (with-eval-after-load "projectile"
+    (add-to-list 'projectile-globally-ignored-directories "vendor/bundle")
+    (add-to-list 'projectile-globally-ignored-directories "vendor/ruby"))
 
   ;; We never want to edit Rubinius bytecode
   (add-to-list 'completion-ignored-extensions ".rbc")

@@ -3,12 +3,12 @@
       (message "Nexus initialized in %s" (emacs-init-time)))
 
 (message "Nexus is powering up... Be patient, Master %s!"
-	          (getenv (if (equal system-type 'windows-nt) "USERNAME" "USER")))
+              (getenv (if (equal system-type 'windows-nt) "USERNAME" "USER")))
 
 ;; Check Emacs version.
 (when (version< emacs-version "26.1")
     (error "Nexus requires at least GNU Emacs 26.1, but you're running %s"
-	            emacs-version))
+                emacs-version))
 
 ;; Setup basic paths.
 (defvar nexus-core-dir (file-name-directory load-file-name)
@@ -29,6 +29,7 @@
 ;; Core stuff
 (require 'nexus-core-custom)
 (require 'nexus-core-utils)
+(require 'nexus-core-userconfig)
 
 ;; Continue core stuff
 (require 'nexus-core-packages)
@@ -49,6 +50,9 @@
 ;; Config changes made through the customize UI will be store here
 (setq custom-file (expand-file-name "custom.el" nexus-dir))
 (load-file custom-file)
+
+;; Enable custom themes
+(require 'nexus-core-themes)
 
 ;; The modules
 (require 'nexus-core-modules)

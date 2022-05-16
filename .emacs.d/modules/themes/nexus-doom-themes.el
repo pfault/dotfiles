@@ -3,8 +3,6 @@
 
 (use-package doom-themes
   :custom
-  ;; Initial theme to load.
-  (nexus-doom-themes-init-theme 'doom-vibrant)
 
   ;; Global doom-themes options
   (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
@@ -38,6 +36,9 @@
   (doom-themes-org-config)
 
   :init
+  ;; Initial theme to load.
+  (setq nexus-doom-themes-init-theme 'doom-vibrant)
+
   (defun nexus-doom-themes-load (theme)
     (interactive (list (completing-read "Choose theme: "
                                         (nexus-doom-themes-list))))

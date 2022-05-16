@@ -13,15 +13,18 @@
   :custom
   (magit-bury-buffer-function 'magit-mode-quit-window)
   (magit-commit-arguments '("-S"))
-  (magit-completing-read-function 'magit-ido-completing-read)
+  (magit-completing-read-function 'selectrum-completing-read)
   (magit-default-tracking-name-function
    'magit-default-tracking-name-branch-only)
+  (magit-diff-adjust-tab-width t)
   (magit-diff-refine-hunk t)
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1)
   (magit-repository-directories '(("~/Projects" . 2)
                                   ("~/src" . 1)
+                                  ("~/git" . 1)
                                   ("~/.emacs.d" . 0)
+                                  ("~/.config/emacs-nexus" . 0)
                                   ("~/.dotfiles" . 2)))
   (magit-restore-window-configuration nil)
   (magit-revert-buffers 'silent)
@@ -33,7 +36,7 @@
   (defun nexus-magit-mode-setup ())
 
   (defun nexus-git-commit-mode-setup ()
-    (setq tab-width 2
+    (setq tab-width 4
           fill-column 72)
 
     (nexus-display-fill-column)
@@ -43,7 +46,8 @@
     (auto-fill-mode))
 
   :config
-  (require 'magit))
+  (when (fboundp 'system-move-file-to-trash)
+    (setq magit-delete-by-moving-to-trash t)))
 
 (use-package transient
   :defer t

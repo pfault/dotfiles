@@ -16,7 +16,7 @@
 
   :custom
   (projectile-cache-file (expand-file-name "projectile" nexus-cache-dir))
-  (projectile-completion-system 'ido)
+  ;;(projectile-completion-system 'ido)
   (projectile-enable-caching nil)
   (projectile-globally-ignored-directories '(".bzr"
                                              ".eunit"

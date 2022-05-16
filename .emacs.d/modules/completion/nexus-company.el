@@ -5,7 +5,9 @@
   ;; Scroll through company suggestions with C-n and C-p.
   (:map company-active-map
               ("C-n" . company-select-next)
-              ("C-p" . company-select-previous))
+              ("C-p" . company-select-previous)
+	      ("M-<". company-select-first)
+      	      ("M->". company-select-last))
 
   :custom
   (company-begin-commands '(self-insert-command))

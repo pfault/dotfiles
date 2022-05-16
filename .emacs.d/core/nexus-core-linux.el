@@ -1,5 +1,5 @@
 (if window-system
-    (set-face-attribute 'default nil :family "Menlo for Powerline" :height 90))
+    (set-face-attribute 'default nil :family "Hack" :height 100))
 
 ;; Keybindinds
 (global-set-key (kbd "C-M-<return>") 'nexus-linux-toggle-fullscreen)

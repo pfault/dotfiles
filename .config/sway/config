@@ -8,18 +8,20 @@ set $down j
 set $up k
 set $right l
 
-set $first_monitor eDP-1
-set $second_monitor HDMI-A-1
+set $first_monitor DP-4
+set $second_monitor HDMI-A-3
 
 set $terminal alacritty
 set $browser firefox
-set $editor emacs
+set $editor exec emacsclient -c
 set $locker exec bash ~/.config/sway/lock.sh
 set $lockman ~/.config/sway/lockman.sh
 set $screenshot_path ~/.config/sway/screenshot.sh
 
 set $menu exec bemenu-run -i -n -p "Run:"  --fn "monospace 14" --hb "#89cff0" --hf "#000000" --tf "#000000" --tb "#2dc7bc" -m$(swaymsg -r -t get_outputs | jq '. | reverse | to_entries | .[] | select(.value.focused == true) | .key') -l 10 
 set $rwofi "wofi --show drun,run"
+
+# xwayland disable
 
 # includes
 include @sysconfdir@/sway/config.d/*
@@ -193,26 +195,26 @@ bindsym $mod+Ctrl+8 rename workspace to $ws8
 bindsym $mod+Ctrl+9 rename workspace to $ws9
 bindsym $mod+Ctrl+0 rename workspace to $ws10
 
-workspace $ws1 output $first_monitor
-workspace $ws2 output $first_monitor
-workspace $ws3 output $first_monitor
-workspace $ws4 output $first_monitor
-workspace $ws5 output $first_monitor
-workspace $ws6 output $first_monitor
-workspace $ws7 output $first_monitor
-workspace $ws8 output $first_monitor
-workspace $ws9 output $first_monitor
-workspace $ws10 output $first_monitor
-workspace $ws11 output $second_monitor
-workspace $ws12 output $second_monitor
-workspace $ws13 output $second_monitor
-workspace $ws14 output $second_monitor
-workspace $ws15 output $second_monitor
-workspace $ws16 output $second_monitor
-workspace $ws17 output $second_monitor
-workspace $ws18 output $second_monitor
-workspace $ws19 output $second_monitor
-workspace $ws20 output $second_monitor
+workspace $ws1 output $second_monitor
+workspace $ws2 output $second_monitor
+workspace $ws3 output $second_monitor
+workspace $ws4 output $second_monitor
+workspace $ws5 output $second_monitor
+workspace $ws6 output $second_monitor
+workspace $ws7 output $second_monitor
+workspace $ws8 output $second_monitor
+workspace $ws9 output $second_monitor
+workspace $ws10 output $second_monitor
+workspace $ws11 output $first_monitor
+workspace $ws12 output $first_monitor
+workspace $ws13 output $first_monitor
+workspace $ws14 output $first_monitor
+workspace $ws15 output $first_monitor
+workspace $ws16 output $first_monitor
+workspace $ws17 output $first_monitor
+workspace $ws18 output $first_monitor
+workspace $ws19 output $first_monitor
+workspace $ws20 output $first_monitor
 
 # resize keys
 mode "resize" {
@@ -243,7 +245,9 @@ seat "*" hide_cursor 5000
 
 focus_follows_mouse yes
 swaynag_command swaynagmode
-output "*" bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+set $wallpapers_path $HOME/Pictures/wallpapers
+output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+#output "*" bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 exec swayidle -w \
          timeout 120 'exec bash ~/.config/sway/lock.sh' \
