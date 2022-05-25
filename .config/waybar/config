@@ -18,10 +18,10 @@
     "height": 24, // Waybar height
     // "width": 1366, // Waybar width
     // Choose the order of the modules
-    
+
     "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "custom/keyboard_layout", "clock"],
+    "modules-right": ["pulseaudio", "network", "temperature", "cpu", "memory", "battery", "backlight", "tray", "custom/keyboard_layout", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -45,22 +45,22 @@
             "focused": "",
             "default": ""
         },
-        "persistent_workspaces": {
-             "1:web": ["eDP-1"],
-             "2:code": ["eDP-1"],
-             "3:term": ["eDP-1"],
-             "4:work": ["eDP-1"],
-             "5:music": ["eDP-1"],
-             "6:docs": ["eDP-1"],
-             "10:misc": ["eDP-1"],
-             "11:web": ["HDMI-A-1"],
-             "12:code": ["HDMI-A-1"],
-             "13:term": ["HDMI-A-1"],
-             "14:work": ["HDMI-A-1"],
-             "15:music": ["HDMI-A-1"],
-             "16:docs": ["HDMI-A-1"],
-             "20:misc": ["HDMI-A-1"]
-}
+//        "persistent_workspaces": {
+//             "1:web": ["eDP-1"],
+//             "2:code": ["eDP-1"],
+//             "3:term": ["eDP-1"],
+//             "4:work": ["eDP-1"],
+//             "5:music": ["eDP-1"],
+//             "6:docs": ["eDP-1"],
+//             "10:misc": ["eDP-1"],
+//             "11:web": ["DP-4"],
+//             "12:code": ["DP-4"],
+//             "13:term": ["DP-4"],
+//             "14:work": ["DP-4"],
+//             "15:music": ["DP-4"],
+//             "16:docs": ["DP-4"],
+//             "20:misc": ["DP-4"]
+//}
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -122,9 +122,31 @@
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep spotify"
     },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-alt": "{icon}",
+        "format-alt-click": "click-left",
+        "format-icons": ["", ""],
+        "on-scroll-up": "light -A 1",
+        "on-scroll-down": "light -U 1"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
+        "critical-threshold": 75,
+        "interval": 5,
+        "format": "{icon} {temperatureC}°",
+        "tooltip": false,
+        "format-icons": [
+            "", // Icon: temperature-empty
+            "", // Icon: temperature-quarter
+            "", // Icon: temperature-half
+            "", // Icon: temperature-three-quarters
+            ""  // Icon: temperature-full
+        ]
+    },
     "custom/keyboard_layout": {
-	"format": "{} ⌨️ ",
-	"exec": "$HOME/.config/waybar/keyboard_layout_monitor"
-	//"on-click": "keyboard_layout_switcher"
+        "format": "{} ⌨️ ",
+        "exec": "$HOME/.config/waybar/keyboard_layout_monitor"
+  //"on-click": "keyboard_layout_switcher"
     }
 }

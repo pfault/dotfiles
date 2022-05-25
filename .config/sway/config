@@ -8,20 +8,15 @@ set $down j
 set $up k
 set $right l
 
-set $first_monitor DP-4
-set $second_monitor HDMI-A-3
-
-set $terminal alacritty
+set $terminal kitty
 set $browser firefox
-set $editor exec emacsclient -c
+set $editor "emacsclient -c"
 set $locker exec bash ~/.config/sway/lock.sh
 set $lockman ~/.config/sway/lockman.sh
 set $screenshot_path ~/.config/sway/screenshot.sh
 
-set $menu exec bemenu-run -i -n -p "Run:"  --fn "monospace 14" --hb "#89cff0" --hf "#000000" --tf "#000000" --tb "#2dc7bc" -m$(swaymsg -r -t get_outputs | jq '. | reverse | to_entries | .[] | select(.value.focused == true) | .key') -l 10 
+set $menu exec bemenu-run -i -n -p "Run:"  --fn "monospace 14" --hb "#89cff0" --hf "#000000" --tf "#000000" --tb "#2dc7bc" -m$(swaymsg -r -t get_outputs | jq '. | reverse | to_entries | .[] | select(.value.focused == true) | .key') -l 10
 set $rwofi "wofi --show drun,run"
-
-# xwayland disable
 
 # includes
 include @sysconfdir@/sway/config.d/*
@@ -94,6 +89,7 @@ bindsym $mod+Shift+Right move right
 
 bindsym $mod+s splitv
 bindsym $mod+Shift+s splith
+bindsym $mod+Shift+n split none
 
 bindsym $mod+f fullscreen toggle
 
@@ -116,26 +112,26 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Tab workspace back_and_forth
 
 set {
-	$ws1	"1:web"
-	$ws2	"2:code"
-	$ws3	"3:term" 
-	$ws4	"4:work" 
-	$ws5	"5:music"
-	$ws6	"6:docs"
-	$ws7	"7:"
-	$ws8	"8:" 
-	$ws9	"9:"
-	$ws10	"10:misc",
-	$ws11	"11:web"
-	$ws12	"12:code"
-	$ws13	"13:term" 
-	$ws14	"14:work" 
-	$ws15	"15:music"
-	$ws16	"16:docs"
-	$ws17	"17:"
-	$ws18	"18:" 
-	$ws19	"19:"
-	$ws20	"20:misc"
+  $ws1	"1:web"
+  $ws2	"2:code"
+  $ws3	"3:term"
+  $ws4	"4:work"
+  $ws5	"5:music"
+  $ws6	"6:docs"
+  $ws7	"7:"
+  $ws8	"8:"
+  $ws9	"9:"
+  $ws10	"10:misc",
+  $ws11	"11:web"
+  $ws12	"12:code"
+  $ws13	"13:term"
+  $ws14	"14:work"
+  $ws15	"15:music"
+  $ws16	"16:docs"
+  $ws17	"17:"
+  $ws18	"18:"
+  $ws19	"19:"
+  $ws20	"20:misc"
 }
 
 bindsym $mod+1 workspace number $ws1
@@ -194,46 +190,29 @@ bindsym $mod+Ctrl+7 rename workspace to $ws7
 bindsym $mod+Ctrl+8 rename workspace to $ws8
 bindsym $mod+Ctrl+9 rename workspace to $ws9
 bindsym $mod+Ctrl+0 rename workspace to $ws10
-
-workspace $ws1 output $second_monitor
-workspace $ws2 output $second_monitor
-workspace $ws3 output $second_monitor
-workspace $ws4 output $second_monitor
-workspace $ws5 output $second_monitor
-workspace $ws6 output $second_monitor
-workspace $ws7 output $second_monitor
-workspace $ws8 output $second_monitor
-workspace $ws9 output $second_monitor
-workspace $ws10 output $second_monitor
-workspace $ws11 output $first_monitor
-workspace $ws12 output $first_monitor
-workspace $ws13 output $first_monitor
-workspace $ws14 output $first_monitor
-workspace $ws15 output $first_monitor
-workspace $ws16 output $first_monitor
-workspace $ws17 output $first_monitor
-workspace $ws18 output $first_monitor
-workspace $ws19 output $first_monitor
-workspace $ws20 output $first_monitor
+bindsym $mod+Ctrl+bracketright move workspace to output right
+bindsym $mod+Ctrl+bracketleft move workspace to output left
+bindsym $mod+Ctrl+braceright move workspace to output up
+bindsym $mod+Ctrl+braceleft move workspace to output down
 
 # resize keys
 mode "resize" {
-	# left will shrink the containers width
-	# right will grow the containers width
-	# up will shrink the containers height
-	# down will grow the containers height
-	bindsym $left resize shrink width 10px
-	bindsym $down resize grow height 10px
-	bindsym $up resize shrink height 10px
-	bindsym $right resize grow width 10px
+  # left will shrink the containers width
+  # right will grow the containers width
+  # up will shrink the containers height
+  # down will grow the containers height
+  bindsym $left resize shrink width 10px
+  bindsym $down resize grow height 10px
+  bindsym $up resize shrink height 10px
+  bindsym $right resize grow width 10px
 
-	bindsym Left resize shrink width 10px
-	bindsym Down resize grow height 10px
-	bindsym Up resize shrink height 10px
-	bindsym Right resize grow width 10px
+  bindsym Left resize shrink width 10px
+  bindsym Down resize grow height 10px
+  bindsym Up resize shrink height 10px
+  bindsym Right resize grow width 10px
 
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
 
@@ -245,9 +224,11 @@ seat "*" hide_cursor 5000
 
 focus_follows_mouse yes
 swaynag_command swaynagmode
+
 set $wallpapers_path $HOME/Pictures/wallpapers
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
-#output "*" bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output "*" bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+
 
 exec swayidle -w \
          timeout 120 'exec bash ~/.config/sway/lock.sh' \
@@ -286,4 +267,9 @@ set $green		#859900
 #					border	backgr.	text	indica.	child_border
 #client.focused			$red	$gray3	$white	$red	$red
 #client.unfocused		$base00	#222222	#888888	#292d2e	#222222
-
+# window decorations
+# class               border      background	text        indicator   child_border
+client.focused          #a600a4     #440040     #f106e3     #DADAE8     #A4B9EF
+client.focused_inactive #a600a4     #332E41     #bb9af7     #DADAE8     #A4B9EF
+client.unfocused        #960094     #1E1E28     #a600a4     #DADAE8     #575268
+client.urgent           #A4B9EF     #575268     #ff00bb     #DADAE8     #EBDDAA

@@ -9,6 +9,7 @@
   lsp-deferred
 
   :hook
+  (python-mode . lsp-deferred)
   (lsp-mode . nexus-lsp-mode-setup)
 
   :custom

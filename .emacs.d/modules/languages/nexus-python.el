@@ -111,7 +111,41 @@
 ;;   (setq lsp-python-ms-executable "/usr/bin/mspyls")
 ;;   )
 
-(use-package lsp-python-ms)
+;; poetry
+(use-package poetry
+  :after python
+  :ensure t
+  :hook
+  ;; activate poetry-tracking-mode when python-mode is active
+  (python-mode . poetry-tracking-mode)
+  )
+
+;; lsp Python
+(use-package lsp-python-ms
+  :after poetry
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :config
+  (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
+  ;; attempt to activate Poetry env first
+  (when (stringp (poetry-find-project-root))
+    (poetry-venv-workon)
+    )
+  :hook
+  (
+   (python-mode . (lambda ()
+                    (require 'lsp-python-ms)
+                    (lsp-deferred)
+                    ))
+   ;; if .dir-locals exists, read it first, then activate mspyls
+   (hack-local-variables . (lambda ()
+                             (when (derived-mode-p 'python-mode)
+                               (require 'lsp-python-ms)
+                               (lsp-deferred))
+                             ))
+   )
+  )
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -120,12 +154,12 @@
   :hook (
          (python-mode . lsp)
          (python-mode . dap-mode)
-         (python-mode . dap-ui-mode)
- ;;        (python-mode . company-mode)
-         (python-mode . (lambda () (let ((venv (locate-venv default-directory))) (when venv (setq-local lsp-pyls-plugins-jedi-environment venv)))))
+         ;;(python-mode . dap-ui-mode)
+         (python-mode . company-mode)
+         ;;(python-mode . (lambda () (let ((venv (locate-venv default-directory))) (when venv (setq-local lsp-pyls-plugins-jedi-environment venv)))))
          (python-mode . (lambda () (setq-local isort-bin (or (poetry-which "isort" default-directory) "isort"))))
          (python-mode . (lambda () (setq-local black-bin (or (poetry-which "black" default-directory) "black"))))
-         (python-mode . (lambda () (setq-local poetry-root (or (locate-pyproject-directory) default-directory))))
+         ;;(python-mode . (lambda () (setq-local poetry-root (or (locate-pyproject-directory) default-directory))))
          ;; (python-mode . (lambda () (setq-local lsp-python-ms-python-executable-cmd (combined-which "python" default-directory))))
          ;; (python-mode . (lambda () (if (string-match-p (regexp-quote "/tests/") default-directory) (setq-local lsp-python-ms-extra-paths (list default-directory)))))
          (python-mode . (lambda () (add-hook 'before-save-hook 'python-fmt nil 'local)))
