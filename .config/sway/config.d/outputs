@@ -2,12 +2,12 @@ set $laptop eDP-1
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 
-output eDP-1 {
+output HDMI-A-3 {
   position 0 0
+  scale 1
 }
 
-output "Toshiba America Info Systems Inc ScreenXpert- 0x00008800" {
-  transform 90
-  position 0 1080
-  scale 2
+output DP-4 {
+  position 2560 0
+  scale 1
 }

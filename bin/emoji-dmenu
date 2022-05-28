@@ -1,0 +1,35 @@
+#!/bin/sh
+# ISC License
+
+# Copyright (c) 2017-2022, Martin Schrodi
+# Copyright (c) 2017-2021, Maxim Baz
+
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+data="${XDG_CACHE_HOME:-$HOME/.cache}/emoji.data"
+[ -f "$data" ] || {
+    notify-send "emoji-dmenu" "Bootstrapping emojis, please wait..."
+    emoji-bootstrap
+}
+
+line="$(cat "$data" | dmenu -i -n --fn "monospace 14" -m 1 -l 20 -p emoji)"
+
+if [ -n "$line" ]; then
+    sed -i "/$line/d" "$data"
+    sed -i "1s;^;$line\n;;" "$data"
+
+    wl-clipboard-manager lock
+    printf '%s' "$line" | cut -d' ' -f1 | tr -d '\n' | wl-copy
+    wl-clipboard-manager unlock
+fi

@@ -85,18 +85,18 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 export EDITOR="emacsclient"
 export GTK_THEME=IOTA-GTK
-export QT_QPA_PLATFORM=wayland
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_DBUS_REMOTE=1
+#export QT_QPA_PLATFORM=wayland
+#export MOZ_ENABLE_WAYLAND=1
+#export MOZ_DBUS_REMOTE=1
 # temp fix for RDD blocking vaapi
 #export MOZ_DISABLE_RDD_SANDBOX=1
-export _JAVA_AWT_WM_NONREPARENTING=1
-export SDL_VIDEODRIVER=wayland
-export XDG_CURRENT_DESKTOP=sway
-export XDG_SESSION_TYPE=wayland
-export GDK_BACKEND=wayland
-export CLUTTER_BACKEND=wayland
-export GPG_TTY=$(tty)
+#export _JAVA_AWT_WM_NONREPARENTING=1
+#export SDL_VIDEODRIVER=wayland
+#export XDG_CURRENT_DESKTOP=sway
+#export XDG_SESSION_TYPE=wayland
+#export GDK_BACKEND=wayland
+#export CLUTTER_BACKEND=wayland
+export GPG_TTY=/dev/tty1
 gpg-connect-agent updatestartuptty /bye >/dev/null
 #export PATH="/home/pfault/.local/bin:/home/pfault/.cargo/bin:/home/pfault/bin:$PATH"
 export PATH="/home/pfault/.cargo/bin:/home/pfault/bin:$PATH"

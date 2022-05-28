@@ -1,0 +1,2 @@
+whitelist /var/lib/libvirt/dnsmasq
+whitelist /var/run

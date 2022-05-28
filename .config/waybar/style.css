@@ -1,25 +1,97 @@
-#waybar {
-    font-family: "Hack", Noto Sans, sans-serif;
-    font-size: 12px;
-}
 
-#window {
-    padding: 0 10px;
+@define-color background #1a1b26;
+@define-color foreground #ebdbb2;
+@define-color yellow     #fabd2f;
+@define-color red        #fb4934;
+@define-color green      #b8bb26;
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Hack", "Font Awesome 6 Free Solid";
+  font-size: 16px;
+  min-height: 0;
 }
 
 window#waybar {
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    text-shadow: none;
-    transition-duration: 0s;
-    color: rgba(217, 216, 216, 1);
-    background: #1a1b26;
+  background: @background;
+  color: @foreground;
+  opacity: 0.7;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+#mode {
+  background-color: @background;
+  border-top: 3px solid @background;
+  border-bottom: 3px solid @red;
+}
+
+#custom-usbguard,
+#custom-decrypted,
+#custom-updates,
+#custom-mail,
+#custom-vpn.off,
+#battery.warning,
+#disk.warning,
+#memory.warning,
+#cpu.warning,
+#custom-movie.on,
+#custom-dnd.on {
+  border-top: 3px solid @background;
+  border-bottom: 3px solid @yellow;
+}
+
+#custom-secureboot,
+#custom-systemd,
+#battery.critical,
+#disk.critical,
+#memory.critical,
+#cpu.critical,
+#custom-yubikey,
+#custom-eyes,
+#custom-recording {
+  border-top: 3px solid @background;
+  border-bottom: 3px solid @red;
+}
+
+#battery.charging {
+  border-top: 3px solid @background;
+  border-bottom: 3px solid @green;
+}
+
+#mode,
+#pulseaudio,
+#custom-usbguard,
+#custom-yubikey,
+#custom-eyes,
+#custom-decrypted,
+#custom-secureboot,
+#custom-systemd,
+#custom-updates,
+#custom-mail,
+#network,
+#cpu,
+#disk,
+#memory,
+#backlight,
+#battery,
+#clock {
+  padding: 0 6px;
+  margin: 0 6px;
+}
+
+#custom-vpn,
+#custom-dnd,
+#language,
+#custom-recording {
+  padding: 0;
+  margin: 0 6px;
 }
 
 #workspaces {
     margin: 0 5px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #workspaces button {
@@ -70,79 +142,6 @@ window#waybar {
     color: #a600a4;
 }
 
-#pulseaudio {
-    /* font-size: 26px; */
-}
-
-#custom-recorder {
-  font-size: 18px;
-  margin: 2px 7px 0px 7px;
-  color:#ee2e24;
-}
-
-#tray,
-#mode,
-#battery,
-#temperature,
-#cpu,
-#memory,
-#network,
-#pulseaudio,
-#idle_inhibitor,
-#sway-language,
-#backlight,
-#custom-storage,
-#custom-cpu_speed,
-#custom-powermenu,
-#custom-spotify,
-#custom-weather,
-#custom-mail,
-#custom-media {
-    margin: 0px 0px 0px 10px;
-    padding: 0 5px;
-    /* border-top: 3px solid rgba(217, 216, 216, 0.5); */
-}
-
-/* #clock {
-    margin:     0px 16px 0px 10px;
-    min-width:  140px;
-} */
-
-#battery.warning {
-    color: rgba(255, 210, 4, 1);
-}
-
-#battery.critical {
-    color: rgba(238, 46, 36, 1);
-}
-
-#battery.charging {
-    color: rgba(217, 216, 216, 1);
-}
-
-#custom-storage.warning {
-    color: rgba(255, 210, 4, 1);
-}
-
-#custom-storage.critical {
-    color: rgba(238, 46, 36, 1);
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: black;
-    }
-}
-
-
-#clock {
-    font-weight: bold;
-}
-
-#battery {
-}
-
 #battery icon {
     color: red;
 }
@@ -189,8 +188,6 @@ window#waybar {
     animation-direction: alternate;
 }
 
-
-
 #battery.warning:not(.charging) {
     color: white;
     animation-name: blink-warn;
@@ -209,29 +206,11 @@ window#waybar {
     animation-direction: alternate;
 }
 
-#cpu {
-}
-
-#memory {
-}
-
-#network {
-}
-
 #network.disconnected {
     background: #f53c3c;
-}
-
-#pulseaudio {
-}
-
-#pulseaudio.muted {
-    background: red;
 }
 
 #custom-spotify {
     color: rgb(102, 220, 105);
 }
 
-#tray {
-}

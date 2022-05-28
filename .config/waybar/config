@@ -1,66 +1,64 @@
-//[
-//    {
-//        "layer": "top",
-//        "output": "HDMI-A-1",
-//        "modules-left": ["sway/workspaces","sway/mode"],
-//        "modules-center": ["sway/window"],
-//        "modules-right": ["pulseaudio", "tray", "clock"],
-//    },{
-//        "output": ["eDP-1"],
-//        "modules-left": ["sway/workspaces","sway/mode", "custom/spotify"],
-//        "modules-center": ["sway/window"],
-//        "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "custom/keyboard_layout", "clock"],
-//    }
-//    ],
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar at the bottom of your screen
-    "height": 24, // Waybar height
+    "height": 26, // Waybar height
     // "width": 1366, // Waybar width
     // Choose the order of the modules
 
     "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
     "modules-center": ["sway/window"],
     "modules-right": ["pulseaudio", "network", "temperature", "cpu", "memory", "battery", "backlight", "tray", "custom/keyboard_layout", "clock"],
+    "modules-right": [
+        "custom/progress",
+        "custom/usbguard",
+        "custom/secureboot",
+//        "custom/eyes",
+        "custom/yubikey",
+        "custom/decrypted",
+        "custom/systemd",
+        "custom/updates",
+//        "custom/mail",
+//        "custom/recording",
+        "custom/dnd",
+        "pulseaudio",
+        "network",
+//        "custom/vpn",
+        "temperature",
+        "cpu",
+        "memory",
+        "disk",
+//        "custom/movie",
+        "backlight",
+//        "sway/language",
+        "custom/keyboard_layout",
+        "battery",
+        "tray",
+        "clock"
+    ],
+
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-            "1:web": "",
-            "2:code": "",
-            "3:term": "",
-            "4:work": "",
-            "5:music": "",
-            "6:docs": "",
-            "10:misc": "",
-            "11:web": "",
-            "12:code": "",
-            "13:term": "",
-            "14:work": "",
-            "15:music": "",
-            "16:docs": "",
-            "20:misc": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        },
-//        "persistent_workspaces": {
-//             "1:web": ["eDP-1"],
-//             "2:code": ["eDP-1"],
-//             "3:term": ["eDP-1"],
-//             "4:work": ["eDP-1"],
-//             "5:music": ["eDP-1"],
-//             "6:docs": ["eDP-1"],
-//             "10:misc": ["eDP-1"],
-//             "11:web": ["DP-4"],
-//             "12:code": ["DP-4"],
-//             "13:term": ["DP-4"],
-//             "14:work": ["DP-4"],
-//             "15:music": ["DP-4"],
-//             "16:docs": ["DP-4"],
-//             "20:misc": ["DP-4"]
-//}
+//        "format": "{icon}",
+//        "format-icons": {
+//            "1:web": "",
+//            "2:code": "",
+//            "3:term": "",
+//            "4:work": "",
+//            "5:music": "",
+//            "6:docs": "",
+//            "10:misc": "",
+//            "11:web": "",
+//            "12:code": "",
+//            "13:term": "",
+//            "14:work": "",
+//            "15:music": "",
+//            "16:docs": "",
+//            "20:misc": "",
+//            "urgent": "",
+//            "focused": "",
+//            "default": ""
+//        },
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -77,8 +75,34 @@
     "cpu": {
         "format": "{usage}% "
     },
+    "disk": {
+        "format": "<span foreground='#928374'></span> {percentage_free}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
     "memory": {
-        "format": "{}% "
+        "format": "<span foreground='#928374'></span> {}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+    "backlight": {
+        "format": "<span foreground='#928374'>{icon}</span> {percent}%",
+        "format-icons": [""]
+    },
+    "battery": {
+        "bat": "BAT0",
+        "design-capacity": true,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "<span foreground='#928374'>{icon}</span> {capacity}%",
+        "format-charging": "<span foreground='#928374'></span> {capacity}%",
+        "format-icons": ["", "", "", "", ""]
     },
     "battery": {
         "bat": "BAT0",
@@ -93,17 +117,21 @@
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
-        // "interface": "wlp2s0", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) {ipaddr}/{cidr} ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-disconnected": "Disconnected ⚠",
+        "interval": 2,
+        "format-wifi": "<span foreground='#928374'></span> {essid}({signalStrength}%)",
+        "format-ethernet": "<span foreground='#928374'></span> {ifname}",
+        "format-linked": "<span foreground='#928374'></span> {ifname}",
+        "format-disconnected": " <span foreground='#928374'></span> ",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n {bandwidthDownBits}\n {bandwidthUpBits}",
         "on-click": "networkmanager_dmenu"
     },
     "pulseaudio": {
         //"scroll-step": 1,
-        "format": "{volume}% {icon}",
+        "format": "{volume}% {icon} {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "<span background='#ff0000'></span>",
         "format-bluetooth": "{volume}% {icon}",
-        "format-muted": "",
+        "format-muted": "<span background='#ff0000'></span>",
         "format-icons": {
             "headphones": "",
             "handsfree": "",
@@ -113,7 +141,35 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-click-right": "pavucontrol",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%"
+    },
+    "custom/dnd": {
+        "exec": "waybar-dnd",
+        "return-type": "json",
+        "signal": 2,
+        "interval": "once",
+        "on-click": "waybar-dnd toggle"
+    },
+    "custom/yubikey": {
+        "exec": "waybar-yubikey",
+        "return-type": "json"
+    },
+    "custom/decrypted": {
+        "exec": "waybar-decrypted",
+        "return-type": "json"
+    },
+    "custom/progress": {
+        "exec": "waybar-progress",
+        "return-type": "json",
+        "interval": 1
+    },
+    "custom/systemd": {
+        "exec": "waybar-systemd",
+        "return-type": "json",
+        "interval": 10
     },
     "custom/spotify": {
         "format": " {}",
@@ -122,16 +178,26 @@
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep spotify"
     },
-    "backlight": {
-        "format": "{icon} {percent}%",
-        "format-alt": "{icon}",
-        "format-alt-click": "click-left",
-        "format-icons": ["", ""],
-        "on-scroll-up": "light -A 1",
-        "on-scroll-down": "light -U 1"
+    "custom/usbguard": {
+        "exec": "waybar-usbguard",
+        "return-type": "json",
+        "on-click": "waybar-usbguard allow",
+        "on-click-right": "waybar-usbguard reject"
+    },
+    "custom/updates": {
+        "exec": "waybar-updates show",
+        "return-type": "json",
+        "signal": 1,
+        "on-click-right": "waybar-updates refresh",
+        "interval": "once"
+    },
+    "custom/secureboot": {
+        "exec": "waybar-secureboot",
+        "return-type": "json",
+        "interval": "once"
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "critical-threshold": 75,
         "interval": 5,
         "format": "{icon} {temperatureC}°",
@@ -146,7 +212,7 @@
     },
     "custom/keyboard_layout": {
         "format": "{} ⌨️ ",
-        "exec": "$HOME/.config/waybar/keyboard_layout_monitor"
+        "exec": "$HOME/.config/waybar/xkblayout.py"
   //"on-click": "keyboard_layout_switcher"
     }
 }
