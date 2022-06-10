@@ -16,7 +16,6 @@
 
 ;; Documentation
 (require 'nexus-helpful)
-(require 'nexus-which-key)
 
 ;; Editor
 (require 'nexus-amx)
@@ -30,6 +29,7 @@
 (require 'nexus-rainbow)
 (require 'nexus-undo-tree)
 ;;(require 'nexus-undohist)
+(require 'nexus-which-key)
 (require 'nexus-volatile-highlights)
 
 ;; Linting
@@ -44,10 +44,11 @@
 ;; Navigation
 (require 'nexus-anzu)
 (require 'nexus-avy)
-(require 'nexus-centaur-tabs)
+;;(require 'nexus-centaur-tabs)
 (require 'nexus-dired)
 (require 'nexus-git-link)
 (require 'nexus-imenu)
+(require 'nexus-pulsar)
 ;;(require 'nexus-recursive-narrow)
 ;;(require 'nexus-scroll-half-screen)
 
@@ -69,12 +70,13 @@
 ;; Text editing
 (require 'nexus-expand-region)
 ;;(require 'nexus-goto-chg)
-;;(require 'nexus-move-dup)
+(require 'nexus-move-dup)
 (require 'nexus-multiple-cursors)
 (require 'nexus-randomize-region)
 (require 'nexus-safe-change-case)
 ;;(require 'nexus-smart-shift)
 (require 'nexus-smartparens)
+;;(require 'nexus-electric-pair)
 ;;(require 'nexus-sort-symbols)
 ;;(require 'nexus-sort-words)
 ;;(require 'nexus-string-edit)
@@ -110,6 +112,12 @@
 (require 'nexus-org-caldav)
 (require 'nexus-ox-gfm)
 (require 'nexus-ox-pandoc)
+
+;; Mail
+(require 'nexus-mu4e)
+
+;; News
+(require 'nexus-elfeed)
 
 ;; Tools
 (require 'nexus-docker)

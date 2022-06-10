@@ -1,7 +1,6 @@
 (use-package exec-path-from-shell
   :custom
   (exec-path-from-shell-variables '("PATH"
-				    "SSH_AUTH_SOCK"
                                     "MANPATH"
                                     "TMPDIR"
                                     "GOPATH"

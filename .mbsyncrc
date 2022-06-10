@@ -1,0 +1,23 @@
+IMAPAccount pfault-example
+Host imap.example.com
+User pfault@example.com
+PassCmd "gopass -o Account/imap.example.com/pfault@example.com"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore pfault-example-remote
+Account pfault-example
+
+MaildirStore pfault-example-local
+SubFolders Verbatim
+Path ~/Mail/pfault-example/
+Inbox ~/Mail/pfault-example/INBOX/
+
+Channel pfault-example
+Far :pfault-example-remote:
+Near :pfault-example-local:
+Patterns *
+Create Slave
+CopyArrivalDate yes
+Expunge Both
+SyncState *

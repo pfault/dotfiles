@@ -1,10 +1,10 @@
 [Unit]
-Description=Autoname sway workspaces
+Description=Syncthing Tray
 PartOf=sway-session.target
 After=sway-session.target
 
 [Service]
-ExecStart=%h/bin/sway-autoname-workspaces -d
+ExecStart=/usr/bin/syncthingtray --wait
 Restart=always
 RestartSec=10s
 

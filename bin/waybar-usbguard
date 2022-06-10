@@ -17,8 +17,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-trap 'jobs -p | xargs kill' EXIT
 listen() {
+    trap 'jobs -p | xargs kill' EXIT
     dbus-monitor --system --profile "interface='org.usbguard.Devices1'" |
         while read -r line; do
             blocked="$(usbguard list-devices -b | head -n1 | grep -Po 'name "\K[^"]+')"

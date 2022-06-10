@@ -1,8 +1,10 @@
 [Unit]
 Description=Periodically refresh list of outdated packages in waybar
+PartOf=sway-session-target
+After=sway-session.target
 
 [Timer]
-OnCalendar=00/6:00
+OnCalendar=00/1:15
 Persistent=true
 
 [Install]

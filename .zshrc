@@ -96,7 +96,7 @@ export GTK_THEME=IOTA-GTK
 #export XDG_SESSION_TYPE=wayland
 #export GDK_BACKEND=wayland
 #export CLUTTER_BACKEND=wayland
-export GPG_TTY=/dev/tty1
+export GPG_TTY="$TTY"
 gpg-connect-agent updatestartuptty /bye >/dev/null
 #export PATH="/home/pfault/.local/bin:/home/pfault/.cargo/bin:/home/pfault/bin:$PATH"
 export PATH="/home/pfault/.cargo/bin:/home/pfault/bin:$PATH"
